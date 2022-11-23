@@ -2,8 +2,6 @@
 import { ref } from "vue";
 import Login from "./auth/Login.vue";
 
-defineProps<{ msg: string }>();
-
 const count = ref(0);
 </script>
 

@@ -1,6 +1,7 @@
 import { queryClient } from "../../Query";
 import axios from "axios";
 import { googleLogout } from "vue3-google-login";
+import { IsLogin } from "../../Interfejsy";
 
 export interface ILoggedIn {
   IsAuthenticated: boolean;

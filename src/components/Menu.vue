@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
 import { ref } from "vue";
+import { IsLogin } from "../Interfejsy";
 import { router } from "../router";
-import { ILoggedIn, isLoggedIn, getLogout } from "./auth/authQuerys";
+import { ILoggedIn, getLogout } from "./auth/authQuerys";
+import { isLoggedIn as isLoggedInRouter } from "../router";
 
-
-let isLogged = useQuery(
+const isLogged = useQuery(
   ["isLogin"],
-  () => {
-    return {} as any;
-  },
+  isLoggedInRouter,
+  // () => {
+  //   return {} as IsLogin;
+  // },
   {
-    enabled: false,
+    //enabled: false,
   }
 );
-console.log("isLogged.data");
-console.log(isLogged.data.value?.isAuthenticated);
-console.log(isLogged.isSuccess.value);
 
 const activeIndex = ref("1");
 const handleSelect = (key: string, keyPath: string[]) => {
@@ -40,15 +39,16 @@ const handleSelect = (key: string, keyPath: string[]) => {
     >
     <div class="!ml-auto"></div>
     <el-menu-item
-      v-if="!isLogged.data.value?.isAuthenticated"
+      v-if="!isLogged.data.value?.isAuthenticated && !isLogged.isLoading.value"
       :index="router.options.routes.filter((x) => x.name == 'login')[0].path"
       >Login</el-menu-item
     >
     <el-menu-item
-      v-if="!isLogged.data.value?.isAuthenticated"
+      v-if="!isLogged.data.value?.isAuthenticated && !isLogged.isLoading.value"
       :index="router.options.routes.filter((x) => x.name == 'register')[0].path"
       >Register</el-menu-item
     >
+
     <el-menu-item
       v-if="isLogged.data.value?.isAuthenticated"
       class="!border-b-0 focus:!bg-transparent"

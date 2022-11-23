@@ -27,3 +27,12 @@ export type UserPaginationList = {
   itemsTo: number;
   itemsCount: number;
 };
+
+export type IsLogin = {
+  email: string | null;
+  id: string;
+  isAuthenticated: boolean;
+  role: Role;
+};
+
+export type Role = "Admin" | "User";
