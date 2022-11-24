@@ -36,3 +36,10 @@ export type IsLogin = {
 };
 
 export type Role = "Admin" | "User";
+
+export type ResetPasswordModel = {
+  userId: string;
+  resetToken: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+};

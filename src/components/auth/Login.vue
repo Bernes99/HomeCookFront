@@ -11,7 +11,7 @@ const formRef = ref<FormInstance>();
 const loginModel = reactive({
   login: "",
   password: "",
-  remenberLogin: false,
+  rememberLogin: false,
 });
 
 const subbmitForm = (formEl: FormInstance | undefined) => {
@@ -23,9 +23,7 @@ const subbmitForm = (formEl: FormInstance | undefined) => {
         message: "Login successful",
         type: "success",
       });
-      console.log(response);
-      console.log(loginModel);
-      console.log(formEl);
+
       router.push({ name: "home" });
       return response.data;
     })
@@ -121,7 +119,7 @@ const callback: CallbackTypes.CredentialCallback = (response) => {
         </el-form-item>
         <el-form-item>
           <el-checkbox
-            v-model="loginModel.remenberLogin"
+            v-model="loginModel.rememberLogin"
             label="Nie wylogowuj mnie"
             size="large"
           />

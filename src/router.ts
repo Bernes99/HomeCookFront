@@ -40,6 +40,27 @@ const routes = [
     component: () => import("./components/NotFound.vue"),
   },
   {
+    path: "/auth/",
+    name: "auth",
+    children: [
+      {
+        path: "verifyEmail",
+        name: "verifyEmail",
+        component: () => import("./components/auth/ConfirmEmail.vue"),
+      },
+      {
+        path: "forgotPassword",
+        name: "forgotPassword",
+        component: () => import("./components/auth/ForgotPassword.vue"),
+      },
+      {
+        path: "resetPassword",
+        name: "resetpassword",
+        component: () => import("./components/auth/ResetPassword.vue"),
+      },
+    ],
+  },
+  {
     path: "/noAccess",
     name: "noAccess",
     component: () => import("./components/NoAccess.vue"),
