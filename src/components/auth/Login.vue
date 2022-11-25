@@ -97,6 +97,7 @@ const callback: CallbackTypes.CredentialCallback = (response) => {
         :model="loginModel"
         class="text-right"
         :rules="rules"
+        @keydown.enter="subbmitForm(formRef)"
       >
         <el-form-item prop="login">
           <label for="Login">Login</label>

@@ -123,6 +123,7 @@ const { isLoading, isError, data, error } = useQuery(
         :model="registerModel"
         class="text-right"
         :rules="rules"
+        @keydown.enter="subbmitForm(formRef)"
       >
         <el-form-item prop="login">
           <label for="Login">Login</label>
