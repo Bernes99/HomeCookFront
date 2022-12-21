@@ -28,7 +28,8 @@ const routes = [
           {
             path: "categories",
             name: "RecipeCategories",
-            component: () => import("./components/admin/Users/UsersList.vue"),
+            component: () =>
+              import("./components/admin/Recipes/RecipeCategories.vue"),
           },
           {
             path: "tag",
