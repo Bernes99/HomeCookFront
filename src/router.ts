@@ -14,9 +14,51 @@ const routes = [
     component: () => import("./components/HelloWorld.vue"),
   },
   {
-    path: "/admin",
-    name: "admin",
-    component: () => import("./components/admin/AdminPanel.vue"),
+    path: "/admin/",
+    name: "Admin",
+    children: [
+      {
+        path: "recipes/",
+        children: [
+          {
+            path: "",
+            name: "Recipes",
+            component: () => import("./components/admin/Users/UsersList.vue"),
+          },
+          {
+            path: "categories",
+            name: "RecipeCategories",
+            component: () => import("./components/admin/Users/UsersList.vue"),
+          },
+          {
+            path: "tag",
+            name: "Tags",
+            component: () => import("./components/admin/Users/UsersList.vue"),
+          },
+        ],
+      },
+      {
+        path: "products/",
+        children: [
+          {
+            path: "",
+            name: "Products",
+            component: () => import("./components/admin/Products/Products.vue"),
+          },
+        ],
+      },
+      {
+        path: "users/",
+        name: "Users",
+        component: () => import("./components/admin/Users/UsersList.vue"),
+      },
+      {
+        path: "",
+        name: "AdminDefault",
+        component: () => import("./components/admin/Users/UsersList.vue"),
+      },
+    ],
+
     meta: { accessLevel: "admin" },
   },
   {
@@ -30,9 +72,14 @@ const routes = [
     component: () => import("./components/auth/Register.vue"),
   },
   {
-    path: "/recepies/:id",
-    name: "recepie",
-    component: () => import("./components/recepies/Recepie.vue"),
+    path: "/recipes/:id",
+    name: "recpie",
+    component: () => import("./components/recipes/Recipe.vue"),
+  },
+  {
+    path: "/user/:id",
+    name: "UserDetails",
+    component: () => import("./components/User/UserDetails.vue"),
   },
   {
     path: "/dalej",
@@ -79,9 +126,14 @@ export const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
+  await queryClient.ensureQueryData({
+    queryKey: ["isLogin"],
+    queryFn: isLoggedIn,
+  });
   if (!queryClient.getQueryData(["isLogin"])) {
     //const data = await subbmitForm();
     queryClient.invalidateQueries(["isLogin"]);
+
     const canAccess = await canUserAccess(to);
     if (!canAccess) return "/noAccess";
   } else {
@@ -112,7 +164,8 @@ function canUserAccess(route: RouteLocationNormalized): boolean {
   if (route.meta?.accessLevel !== "admin") {
     return true;
   }
-  if ((queryClient.getQueryData(["isLogin"]) as IsLogin)?.role === "User") {
+
+  if ((queryClient.getQueryData(["isLogin"]) as IsLogin)?.role === "Admin") {
     return true;
   }
   return false;

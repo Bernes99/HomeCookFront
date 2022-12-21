@@ -5,10 +5,6 @@ import Login from "./auth/Login.vue";
 const count = ref(0);
 </script>
 
-<template>Hello world</template>
+<template><div>Hello world</div></template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
+<style scoped></style>

@@ -10,8 +10,9 @@ import axios from "axios";
 import { queryClient } from "./Query";
 import vue3GoogleLogin from "vue3-google-login";
 
+export const baseApiUrl = "http://localhost:8080/api/";
 // axios settings
-axios.defaults.baseURL = "http://localhost:8080/api/";
+axios.defaults.baseURL = baseApiUrl;
 axios.defaults.withCredentials = true;
 
 createApp(App)

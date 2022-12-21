@@ -60,13 +60,13 @@ const ValidateEmail = (rule: any, value: any, callback: any) => {
 const rules = reactive({
   login: [{ required: true, message: "Login is required" }],
   email: [{ validator: ValidateEmail, trigger: "blur" }],
-  passwordConfirm: [{ validator: validateConfirmPass, trigger: "blur" }],
+  confirmPassword: [{ validator: validateConfirmPass, trigger: "blur" }],
   password: [{ validator: validatePass, trigger: "blur" }], //[{ validator: validatePass, trigger: "blur" }], //blur - wyjscie z focus , change - ...
 });
 // example
 const test: Testowy = { test1: "test", test2: 1 };
 //
-async function subbmitForm(formEl: FormInstance | undefined) {
+async function submitForm(formEl: FormInstance | undefined) {
   try {
     const response = await axios.post("auth/register", registerModel, {
       withCredentials: false,
@@ -108,7 +108,7 @@ async function subbmitForm(formEl: FormInstance | undefined) {
 ///
 const { isLoading, isError, data, error } = useQuery(
   ["register"],
-  () => subbmitForm(formRef.value),
+  () => submitForm(formRef.value),
   //null,
   { enabled: false }
 );
@@ -123,7 +123,7 @@ const { isLoading, isError, data, error } = useQuery(
         :model="registerModel"
         class="text-right"
         :rules="rules"
-        @keydown.enter="subbmitForm(formRef)"
+        @keydown.enter="submitForm(formRef)"
       >
         <el-form-item prop="login">
           <label for="Login">Login</label>
@@ -188,7 +188,7 @@ const { isLoading, isError, data, error } = useQuery(
             size="large"
           />
         </el-form-item>
-        <el-button @click="subbmitForm(formRef)" class=""
+        <el-button @click="submitForm(formRef)" class=""
           >Utwórz konto</el-button
         >
       </el-form>

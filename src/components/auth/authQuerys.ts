@@ -2,7 +2,7 @@ import { queryClient } from "../../Query";
 import axios from "axios";
 import { googleLogout } from "vue3-google-login";
 import { IsLogin } from "../../Interfejsy";
-
+import { router } from "../../router";
 export interface ILoggedIn {
   IsAuthenticated: boolean;
   Email: string;
@@ -27,6 +27,7 @@ export async function getLogout() {
     });
     queryClient.resetQueries(["isLogin"]);
     googleLogout();
+    router.push({ name: "home" });
     return true;
   } catch (err: any) {
     return false;

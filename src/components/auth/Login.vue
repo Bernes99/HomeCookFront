@@ -43,8 +43,7 @@ const { data: data2 } = useQuery(
     enabled: false,
   }
 );
-console.log("data2");
-console.log(data2.value);
+
 const { isLoading, isError, data, error } = useQuery(
   ["login"],
   () => subbmitForm(formRef.value),
@@ -90,15 +89,18 @@ const callback: CallbackTypes.CredentialCallback = (response) => {
 
 <template>
   <main class="flex flex-1 justify-center items-center">
-    <div class="w-96 border-gray-600 border-2 p-10 rounded-md bg-gray-200">
+    <div
+      class="w-96 border-gray-600 border-2 p-10 rounded-md bg-gray-200 shadow-xl"
+    >
       <el-form
         label-position="top"
         ref="formRef"
         :model="loginModel"
-        class="text-right"
+        class="text-center"
         :rules="rules"
         @keydown.enter="subbmitForm(formRef)"
       >
+        <div><span>Log into HomeCook</span></div>
         <el-form-item prop="login">
           <label for="Login">Login</label>
           <el-input
@@ -109,11 +111,11 @@ const callback: CallbackTypes.CredentialCallback = (response) => {
           />
         </el-form-item>
         <el-form-item class="text-lg" prop="password">
-          <label>Hasło</label>
+          <label>Password</label>
           <el-input
             v-model="loginModel.password"
             type="password"
-            placeholder="Hasło"
+            placeholder="Password"
             show-password
             size="large"
           />
@@ -121,18 +123,26 @@ const callback: CallbackTypes.CredentialCallback = (response) => {
         <el-form-item>
           <el-checkbox
             v-model="loginModel.rememberLogin"
-            label="Nie wylogowuj mnie"
+            label="Remember me"
             size="large"
           />
         </el-form-item>
-        <el-button @click="subbmitForm(formRef)" class="">Zaloguj</el-button>
-
+        <el-button @click="subbmitForm(formRef)" class="">Log in</el-button>
+        <div class="my-4">or</div>
         <GoogleLogin :callback="callback" />
       </el-form>
 
-      <el-form-item>
-        <RouterLink :to="{ name: 'dalej' }">dalej dalej</RouterLink>
-      </el-form-item>
+      <div class="flex divide-x divide-dotted divide-black">
+        <el-form-item>
+          <RouterLink :to="{ name: 'forgotPassword' }"
+            >Can't log in?</RouterLink
+          >
+        </el-form-item>
+
+        <el-form-item>
+          <RouterLink :to="{ name: 'forgotPassword' }">Sign up</RouterLink>
+        </el-form-item>
+      </div>
     </div>
   </main>
 </template>

@@ -35,6 +35,28 @@ export type IsLogin = {
   role: Role;
 };
 
+export type Category = {
+  id: string;
+  name: string;
+};
+
+export type Product = {
+  id: string;
+  name: string;
+  calories: number;
+  unitType: number;
+  unitName: string;
+  category: Category;
+};
+export type UpdateProduct = {
+  id: string;
+  name: string;
+  calories: number;
+  unitType: number;
+  categoryId: string;
+};
+// export type UnitTypes = "item" | "ml" | "l" | "g" | "kg";
+export const UnitTypes = ["item", "ml", "l", "g", "kg"] as const;
 export type Role = "Admin" | "User";
 
 export type ResetPasswordModel = {
