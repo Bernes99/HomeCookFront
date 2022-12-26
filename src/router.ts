@@ -11,7 +11,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: () => import("./components/HelloWorld.vue"),
+    component: () => import("./components/Home.vue"),
   },
   {
     path: "/admin/",
@@ -23,18 +23,14 @@ const routes = [
           {
             path: "",
             name: "Recipes",
-            component: () => import("./components/admin/Users/UsersList.vue"),
+            component: () =>
+              import("./components/admin/Recipes/RecipesList.vue"),
           },
           {
             path: "categories",
             name: "RecipeCategories",
             component: () =>
               import("./components/admin/Recipes/RecipeCategories.vue"),
-          },
-          {
-            path: "tag",
-            name: "Tags",
-            component: () => import("./components/admin/Users/UsersList.vue"),
           },
         ],
       },
@@ -81,6 +77,16 @@ const routes = [
     path: "/user/:id",
     name: "UserDetails",
     component: () => import("./components/User/UserDetails.vue"),
+  },
+  {
+    path: "/user/:id/manageRecipes",
+    name: "ManageRecipes",
+    component: () => import("./components/User/ManageRecipes.vue"),
+  },
+  {
+    path: "/user/:id/products",
+    name: "UserProducts",
+    component: () => import("./components/User/UserProducts.vue"),
   },
   {
     path: "/dalej",

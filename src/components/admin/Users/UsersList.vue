@@ -3,6 +3,8 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuery } from "@tanstack/vue-query";
 import {
+  ElButton,
+  ElInput,
   ElMessage,
   ElPagination,
   ElTable,
@@ -10,7 +12,7 @@ import {
   FormInstance,
 } from "element-plus";
 import type { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
-import { User, PaginationModel, UserPaginationList } from "../../../Interfejsy";
+import { User, PaginationModel, PaginationList } from "../../../Interfejsy";
 import { forEach, List } from "lodash";
 import AdminMenu from "../AdminMenu.vue";
 import { router } from "../../../router";
@@ -44,7 +46,7 @@ const changeListPage = () => {
       withCredentials: true,
     })
     .then((response) => {
-      let data: UserPaginationList = response.data;
+      let data: PaginationList<User> = response.data;
 
       data.items = data.items.map((element) => ({
         ...element,
@@ -88,7 +90,12 @@ const GoToUserDetails = (row: User) => {
 <template>
   <div class="flex grow">
     <AdminMenu></AdminMenu>
-    <div class="grow flex flex-col">
+    <el-card class="grow flex flex-col">
+      <template #header>
+        <div class="">
+          <span>Manage Users</span>
+        </div>
+      </template>
       <div class="flex">
         <el-input
           v-model="paginationModel.searchPhrase"
@@ -123,7 +130,7 @@ const GoToUserDetails = (row: User) => {
         <el-pagination
           class=""
           v-model:page-size="paginationModel.pageSize"
-          :page-sizes="[5, 10, 15, 50]"
+          :page-sizes="[5, 10, 15]"
           :small="false"
           :disabled="false"
           :background="true"
@@ -146,7 +153,7 @@ const GoToUserDetails = (row: User) => {
           @size-change="UserListQuery.refetch()"
         />
       </div>
-    </div>
+    </el-card>
   </div>
 </template>
 

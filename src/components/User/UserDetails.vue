@@ -65,11 +65,6 @@ const getProfileImage = () => {
       return data;
     })
     .catch((err) => {
-      ElMessage({
-        showClose: true,
-        message: "Fail to find user",
-        type: "error",
-      });
       throw new Error("Fail catch users Profile Picture");
     });
 };
@@ -183,6 +178,7 @@ onMounted(() => {
         <!-- <img class="w-1/3" :src="profilePicture" alt="" />
       <div class="w-2/3 pl-4">test</div> -->
         <el-upload
+          class="avatar-uploader"
           :action="updateProfileUrl()"
           :with-credentials="true"
           method="Put"
@@ -198,4 +194,27 @@ onMounted(() => {
   </el-card>
 </template>
 
-<style scoped></style>
+<style scoped>
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+.avatar-uploader {
+  cursor: pointer;
+  overflow: hidden;
+}
+</style>
+<style>
+.el-upload:hover {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 600ms;
+  border-color: rgb(33, 33, 243);
+}
+.el-upload {
+  border-radius: 12px;
+  border: 1px dashed rgb(75 85 99);
+}
+</style>

@@ -3,12 +3,19 @@ import { useQuery } from "@tanstack/vue-query";
 import { computed, ref } from "vue";
 import { IsLogin } from "../Interfejsy";
 import { router } from "../router";
-import { ILoggedIn, getLogout } from "./auth/authQuerys";
+import { ILoggedIn, getLogout } from "./auth/authQueries";
 import { isLoggedIn as isLoggedInRouter } from "../router";
 import axios from "axios";
-import { ElAvatar, ElMenu, ElMenuItem, ElSubMenu } from "element-plus";
+import { ElAvatar, ElIcon, ElMenu, ElMenuItem, ElSubMenu } from "element-plus";
 import { useRoute } from "vue-router";
-import { UserFilled } from "@element-plus/icons-vue";
+import {
+  Apple,
+  House,
+  List,
+  SwitchButton,
+  Tools,
+  UserFilled,
+} from "@element-plus/icons-vue";
 
 const route = useRoute();
 const enableAvatar = computed(() => !!isLogged.data.value?.id);
@@ -22,7 +29,7 @@ const isLogged = useQuery(
     //enabled: false,
   }
 );
-const userAvatar = useQuery(["UserAvatar"], GetAvatar, {
+const userAvatarQuery = useQuery(["UserAvatar"], GetAvatar, {
   enabled: enableAvatar,
 });
 
@@ -32,6 +39,23 @@ async function GetAvatar() {
   );
   return response.data as string;
 }
+
+async function goToUserDetails() {
+  router.push({ name: "UserDetails", params: { id: isLogged.data.value?.id } });
+}
+async function goToMenageRecipes() {
+  router.push({
+    name: "ManageRecipes",
+    params: { id: isLogged.data.value?.id },
+  });
+}
+async function goToUserProducts() {
+  router.push({
+    name: "UserProducts",
+    params: { id: isLogged.data.value?.id },
+  });
+}
+
 const activeIndex = ref("1");
 // const handleSelect = (key: string, keyPath: string[]) => {
 //   console.log(key, keyPath);
@@ -52,7 +76,7 @@ const activeIndex = ref("1");
     <el-menu-item
       class="!border-b-0 hover:!bg-transparent focus:!bg-transparent"
       :index="router.options.routes.filter((x) => x.name == 'home')[0].path"
-      ><span class="text-zinc-50">LOGO</span></el-menu-item
+      ><span class="text-zinc-50"><b class="">HOMECOOK</b></span></el-menu-item
     >
     <div class="!ml-auto"></div>
     <el-menu-item
@@ -74,14 +98,46 @@ const activeIndex = ref("1");
       collapse-open-icon=""
     >
       <template #title>
-        <el-avatar :icon="UserFilled" :src="userAvatar.data.value" />
+        <el-avatar :icon="UserFilled" :src="userAvatarQuery.data.value" />
       </template>
 
       <el-menu-item
-        v-if="isLogged.data.value?.isAuthenticated"
+        v-if="
+          isLogged.data.value?.isAuthenticated &&
+          isLogged.data.value.role === 'Admin'
+        "
         class="!border-b-0 focus:!bg-transparent"
         :index="router.options.routes.filter((x) => x.name == 'Admin')[0].path"
-        ><span class="text-white">admin</span></el-menu-item
+        ><span class="text-white"
+          ><el-icon><House /></el-icon>admin</span
+        ></el-menu-item
+      >
+      <el-menu-item
+        v-if="isLogged.data.value?.isAuthenticated"
+        class="!border-b-0 focus:!bg-transparent"
+        index=""
+        @click="goToUserProducts"
+        ><span class="text-white"
+          ><el-icon><Apple /></el-icon>Your Products</span
+        ></el-menu-item
+      >
+      <el-menu-item
+        v-if="isLogged.data.value?.isAuthenticated"
+        class="!border-b-0 focus:!bg-transparent"
+        index=""
+        @click="goToMenageRecipes"
+        ><span class="text-white"
+          ><el-icon><List /></el-icon> Manage Recipes</span
+        ></el-menu-item
+      >
+      <el-menu-item
+        v-if="isLogged.data.value?.isAuthenticated"
+        class="!border-b-0 focus:!bg-transparent"
+        index=""
+        @click="goToUserDetails"
+        ><span class="text-white"
+          ><el-icon><Tools /></el-icon> Account</span
+        ></el-menu-item
       >
 
       <el-menu-item
@@ -89,7 +145,9 @@ const activeIndex = ref("1");
         class="!border-b-0 focus:!bg-transparent"
         index=""
         @click="getLogout"
-        ><span class="text-white">Logout</span></el-menu-item
+        ><span class="text-white"
+          ><el-icon><SwitchButton /></el-icon>Logout</span
+        ></el-menu-item
       >
     </el-sub-menu>
 

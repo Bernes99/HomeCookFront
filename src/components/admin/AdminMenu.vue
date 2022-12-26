@@ -65,9 +65,6 @@ const getPathByName = (routes: readonly RouteRecordRaw[], name: string) => {
         :index="getPathByName(router.options.routes, 'RecipeCategories')"
         >Recipe Categories</el-menu-item
       >
-      <el-menu-item :index="getPathByName(router.options.routes, 'Tags')"
-        >Recipe Tags</el-menu-item
-      >
     </el-sub-menu>
   </el-menu>
 </template>

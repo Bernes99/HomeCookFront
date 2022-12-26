@@ -21,6 +21,7 @@ import {
   ElTableColumn,
   ElDialog,
   ElInputNumber,
+  ElPopconfirm,
 } from "element-plus";
 import { onMounted, ref, watch } from "vue";
 import {
@@ -29,6 +30,7 @@ import {
   PaginationModel,
   UnitTypes,
   UpdateProduct,
+  PaginationList,
 } from "../../../Interfejsy";
 import AdminMenu from "../AdminMenu.vue";
 
@@ -124,16 +126,40 @@ const paginationModel = ref<PaginationModel>({
   sortDirection: "ASC",
 });
 
+async function deleteProductCategory(cat: Category) {
+  axios
+    .delete(`Product/Category/DeleteProductCategory/${cat.id}`)
+    .then((response) => {
+      ElMessage({
+        showClose: true,
+        message: "Product category has been Deleted",
+        type: "success",
+      });
+      GetProductCategories();
+    })
+    .catch((err) => {
+      ElMessage({
+        showClose: true,
+        message: "Fail to Delete product category",
+        type: "error",
+      });
+    });
+}
+
 const GetProducts = () => {
   return axios
     .get("Product/GetProductList", {
       params: {
         category: searchCategory.value.name,
+        PageNumber: paginationModel.value.currentPage,
+        PageSize: paginationModel.value.pageSize,
+        SortBy: paginationModel.value.sortBy,
+        SortDirection: paginationModel.value.sortDirection,
       },
     })
     .then((response) => {
-      let data: Array<Product> = response.data;
-      data.forEach((x) => (x.unitName = UnitTypes[x.unitType]));
+      let data: PaginationList<Product> = response.data;
+      data.items.forEach((x) => (x.unitName = UnitTypes[x.unitType]));
       return data;
     })
     .catch((err) => {
@@ -142,7 +168,7 @@ const GetProducts = () => {
         message: "Fail catch users list",
         type: "error",
       });
-      throw new Error("Fail catch users list");
+      throw new Error("Fail catch products list");
     });
 };
 
@@ -252,14 +278,14 @@ onMounted(() => {
 <template>
   <div class="flex grow">
     <AdminMenu></AdminMenu>
-    <div class="w-full">
-      <el-card class="w-full">
+    <div class="grow flex flex-col">
+      <el-card class="">
         <template #header>
           <div class="">
             <span>Manage Products</span>
           </div>
         </template>
-        <div class="flex">
+        <div class="flex justify-between">
           <div>
             <el-select
               v-model="searchCategory"
@@ -279,10 +305,11 @@ onMounted(() => {
                 :value="item"
               />
             </el-select>
+            <el-button type="primary" @click="ProductListQuery.refetch()"
+              >Search</el-button
+            >
           </div>
-          <el-button type="primary" @click="ProductListQuery.refetch()"
-            >Search</el-button
-          >
+
           <el-button type="success" @click="openAddProductDialog"
             >Add Product</el-button
           >
@@ -290,7 +317,7 @@ onMounted(() => {
 
         <el-table
           class=""
-          :data="ProductListQuery.data.value ?? []"
+          :data="ProductListQuery.data.value?.items ?? []"
           :default-sort="{ prop: 'date', order: 'descending' }"
           :flexible="true"
           @row-click="openUpdateDialog"
@@ -331,12 +358,12 @@ onMounted(() => {
           <el-pagination
             class=""
             v-model:page-size="paginationModel.pageSize"
-            :page-sizes="[5, 10, 15, 50]"
+            :page-sizes="[5, 10, 15]"
             :small="false"
             :disabled="false"
             :background="true"
             layout="sizes, ->,total"
-            :total="ProductListQuery.data.value?.length ?? 0"
+            :total="ProductListQuery.data.value?.itemsCount"
             @current-change="ProductListQuery.refetch()"
             @size-change="ProductListQuery.refetch()"
           />
@@ -349,13 +376,13 @@ onMounted(() => {
             :disabled="false"
             :background="true"
             layout=",prev, pager, next"
-            :total="ProductListQuery.data.value?.length ?? 0"
+            :total="ProductListQuery.data.value?.itemsCount"
             @current-change="ProductListQuery.refetch()"
             @size-change="ProductListQuery.refetch()"
           />
         </div>
       </el-card>
-      <el-card class="w-full">
+      <el-card class="">
         <template #header>
           <div class="">
             <span>Manage Product Categories</span>
@@ -411,6 +438,23 @@ onMounted(() => {
               >
                 <span>Update</span>
               </el-button>
+              <el-popconfirm
+                confirm-button-text="Yes"
+                cancel-button-text="No"
+                icon-color="#626AEF"
+                title="Are you sure to delete this?"
+                @confirm="deleteProductCategory(category)"
+              >
+                <template #reference>
+                  <el-button
+                    type="danger"
+                    v-if="categories?.some((c) => c.name === category.name)"
+                    @click.stop
+                  >
+                    <span>Delete</span>
+                  </el-button>
+                </template>
+              </el-popconfirm>
             </el-form-item>
           </el-form>
         </div>

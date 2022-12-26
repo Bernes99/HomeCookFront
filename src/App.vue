@@ -12,7 +12,7 @@ const isLoginQuery = useQuery(["isLogin"], isLoggedInRouter);
 </script>
 
 <template>
-  <Menu ></Menu>
+  <Menu></Menu>
   <RouterView class="" />
   <!--bg-lime-100 -->
 </template>

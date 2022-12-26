@@ -20,8 +20,8 @@ export type PaginationModel = {
   sortDirection: string;
 };
 
-export type UserPaginationList = {
-  items: User[];
+export type PaginationList<T> = {
+  items: T[];
   totalPages: number;
   itemsFrom: number;
   itemsTo: number;
@@ -54,6 +54,92 @@ export type UpdateProduct = {
   calories: number;
   unitType: number;
   categoryId: string;
+};
+
+export type RecipeListItem = {
+  id: string;
+  title: string;
+  dateCreatedUtc: string;
+  author: string;
+  rating: number;
+  difficulty: number;
+  mainImage: string;
+  products: string[];
+};
+export type RecipeProduct = {
+  product: Product;
+  amount: number;
+};
+export type Recipe = {
+  id: string;
+  dateUtc: string;
+  title: string;
+  introdution: string;
+  text: string;
+  rating: number;
+  portion: string;
+  preparingTime: string;
+  difficulty: number;
+  author: RecipeUser;
+  products: RecipeProduct[];
+  categories: Category[];
+  mainImage: string;
+  images: string[];
+  tags: Category[];
+};
+export type RecipeUser = {
+  id: string;
+  firstName: string;
+  surname: string;
+  email: string;
+};
+
+export type RecipeComment = {
+  id: string;
+  text: string;
+  dateCreatedUtc: string;
+  author: string;
+  authorProfile: string;
+};
+
+export type RecipeFilters = {
+  dateCreatedUtc: string;
+  rating: number;
+  difficulty: number;
+  categoryNames: string[];
+  products: string[];
+};
+
+export type AddRecipe = {
+  title: string;
+  introdution: string;
+  text: string;
+  portion: string;
+  authorId: string;
+  preparingTime: string;
+  difficulty: number;
+  products: Array<AddRecipeProduct>;
+  categoriesIds: Array<string>;
+  tags: Array<string>;
+};
+export type AddRecipeProduct = {
+  productId: string;
+  amount: number;
+};
+
+export type UserProducts = {
+  id: string;
+  product: Product;
+  expirationDate: string;
+  amount: number;
+  isOnShoppingList: boolean;
+};
+
+export type AddUserProducts = {
+  productId: string;
+  expirationDate: string;
+  amount: number;
+  isOnShoppingList: boolean;
 };
 // export type UnitTypes = "item" | "ml" | "l" | "g" | "kg";
 export const UnitTypes = ["item", "ml", "l", "g", "kg"] as const;

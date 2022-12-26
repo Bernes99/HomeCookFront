@@ -128,7 +128,7 @@ const sendResetPassword = () => {
             placeholder="Password"
             show-password
             size="large"
-            :disabled="correctLink"
+            :disabled="correctLink === false"
           />
         </el-form-item>
         <el-form-item class="text-lg" prop="newPasswordConfirm">
@@ -139,14 +139,14 @@ const sendResetPassword = () => {
             placeholder="Password"
             show-password
             size="large"
-            :disabled="correctLink"
+            :disabled="correctLink === false"
           />
         </el-form-item>
         <el-button
           size="large"
           @click="sendResetPassword"
           class=""
-          :disabled="correctLink"
+          :disabled="correctLink === false"
           >Reset password</el-button
         >
       </el-form>

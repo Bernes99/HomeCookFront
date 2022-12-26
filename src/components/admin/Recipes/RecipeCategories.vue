@@ -87,6 +87,26 @@ async function UpdateCategory() {
   dialogRecipeCategoryUpdate.value = false;
 }
 
+async function deleteRecipeCategory(cat: Category) {
+  axios
+    .delete(`Recipe/Category/DeleteCategory/${cat.id}`)
+    .then((response) => {
+      ElMessage({
+        showClose: true,
+        message: "Recipe category has been Deleted",
+        type: "success",
+      });
+      GetRecipeCategories();
+    })
+    .catch((err) => {
+      ElMessage({
+        showClose: true,
+        message: "Fail to Delete recipe category",
+        type: "error",
+      });
+    });
+}
+
 async function openUpdateCategoryDialog(cat: Category) {
   updateCategory.value.id =
     cat.id !== ""
@@ -161,6 +181,23 @@ onMounted(() => {
               >
                 <span>Update</span>
               </el-button>
+              <el-popconfirm
+                confirm-button-text="Yes"
+                cancel-button-text="No"
+                icon-color="#626AEF"
+                title="Are you sure to delete this?"
+                @confirm="deleteRecipeCategory(category)"
+              >
+                <template #reference>
+                  <el-button
+                    type="danger"
+                    v-if="categories?.some((c) => c.name === category.name)"
+                    @click.stop
+                  >
+                    <span>Delete</span>
+                  </el-button>
+                </template>
+              </el-popconfirm>
             </el-form-item>
           </el-form>
         </div>
