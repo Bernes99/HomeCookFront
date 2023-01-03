@@ -140,7 +140,7 @@ const callback: CallbackTypes.CredentialCallback = (response) => {
         </el-form-item>
 
         <el-form-item>
-          <RouterLink :to="{ name: 'forgotPassword' }">Sign up</RouterLink>
+          <RouterLink :to="{ name: 'register' }">Sign up</RouterLink>
         </el-form-item>
       </div>
     </div>

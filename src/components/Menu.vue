@@ -18,17 +18,10 @@ import {
 } from "@element-plus/icons-vue";
 
 const route = useRoute();
+
 const enableAvatar = computed(() => !!isLogged.data.value?.id);
-const isLogged = useQuery(
-  ["isLogin"],
-  isLoggedInRouter,
-  // () => {
-  //   return {} as IsLogin;
-  // },
-  {
-    //enabled: false,
-  }
-);
+
+const isLogged = useQuery(["isLogin"], isLoggedInRouter);
 const userAvatarQuery = useQuery(["UserAvatar"], GetAvatar, {
   enabled: enableAvatar,
 });

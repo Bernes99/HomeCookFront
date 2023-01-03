@@ -20,10 +20,11 @@ import {
   ElInput,
   ElCard,
   ElDivider,
+  ElTag,
 } from "element-plus";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { Recipe, RecipeComment } from "../../Interfejsy";
+import { Recipe, RecipeComment, UnitTypes } from "../../Interfejsy";
 
 const route = useRoute();
 
@@ -252,9 +253,10 @@ const RecipeQuery = useQuery(
       <el-card class="h-80 min-h-[20rem] w-2/12 bg-green-700 mr-2">
         <div class="ml-2">
           Products:
-          <!-- <li v-for="item in items"></li> -->
-          <li @click="googleMapsdrawer" v-for="product in recipe.products">
-            {{ product.product.name }}
+          <!-- <li @click="googleMapsdrawer" v-for="product in recipe.products"> -->
+          <li @click="" v-for="product in recipe.products">
+            {{ product.product.name }}, {{ product.amount }}
+            {{ UnitTypes[product.product.unitType] }}
           </li>
         </div>
         <!-- dodać modala po kliknięciu w składnik który wyswietlio mape googla z pobliskim sklepem -->

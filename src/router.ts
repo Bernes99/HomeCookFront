@@ -89,11 +89,6 @@ const routes = [
     component: () => import("./components/User/UserProducts.vue"),
   },
   {
-    path: "/dalej",
-    name: "dalej",
-    component: () => import("./components/NotFound.vue"),
-  },
-  {
     path: "/auth/",
     name: "auth",
     children: [
@@ -127,9 +122,8 @@ const routes = [
 ];
 
 export const router = createRouter({
-  // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHistory(),
-  routes, // short for `routes: routes`
+  routes,
 });
 
 router.beforeEach(async (to, from) => {
@@ -138,7 +132,7 @@ router.beforeEach(async (to, from) => {
     queryFn: isLoggedIn,
   });
   if (!queryClient.getQueryData(["isLogin"])) {
-    //const data = await subbmitForm();
+
     queryClient.invalidateQueries(["isLogin"]);
 
     const canAccess = await canUserAccess(to);
@@ -150,11 +144,6 @@ router.beforeEach(async (to, from) => {
   }
 });
 
-const loginModel = {
-  login: "test1",
-  password: "Test@123",
-  remenberLogin: false,
-};
 
 export const isLoggedIn = () => {
   return axios
