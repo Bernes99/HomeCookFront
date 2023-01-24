@@ -132,13 +132,13 @@ const callback: CallbackTypes.CredentialCallback = (response) => {
         <GoogleLogin :callback="callback" />
       </el-form>
 
-      <div class="flex divide-x divide-dotted divide-black">
+      <div class="flex justify-center">
         <el-form-item>
           <RouterLink :to="{ name: 'forgotPassword' }"
             >Can't log in?</RouterLink
           >
         </el-form-item>
-
+        <el-divider direction="vertical" />
         <el-form-item>
           <RouterLink :to="{ name: 'register' }">Sign up</RouterLink>
         </el-form-item>

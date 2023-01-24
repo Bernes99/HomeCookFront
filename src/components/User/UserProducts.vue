@@ -92,8 +92,9 @@ const handleAddProductInputConfirm = () => {
 const AddUserProduct = () => {
   axios
     .post(`User/${route.params.id}/Products/AddOrUpdate`, userProducts.value)
-    .then((response) => {
+    .then(async (response) => {
       setproductOfCategories();
+      await GetUserProducts();
     })
     .catch((err) => {
       ElMessage({

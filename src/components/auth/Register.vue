@@ -60,7 +60,7 @@ const ValidateEmail = (rule: any, value: any, callback: any) => {
 const rules = reactive({
   login: [{ required: true, message: "Login is required" }],
   email: [{ validator: ValidateEmail, trigger: "blur" }],
-  confirmPassword: [{ validator: validateConfirmPass, trigger: "blur" }],
+  passwordConfirm: [{ validator: validateConfirmPass, trigger: "blur" }],
   password: [{ validator: validatePass, trigger: "blur" }], //[{ validator: validatePass, trigger: "blur" }], //blur - wyjscie z focus , change - ...
 });
 // example
@@ -135,48 +135,48 @@ const { isLoading, isError, data, error } = useQuery(
           />
         </el-form-item>
         <el-form-item prop="firstName">
-          <label for="Login">Imię</label>
+          <label for="Login">Name</label>
           <el-input
             v-model="registerModel.firstName"
-            placeholder="Imię"
+            placeholder="FirstName"
             clearable
             size="large"
           />
         </el-form-item>
         <el-form-item prop="surname">
-          <label for="Login">Nazwisko</label>
+          <label for="Login">Surname</label>
           <el-input
             v-model="registerModel.surname"
-            placeholder="Nazwisko"
+            placeholder="Surname"
             clearable
             size="large"
           />
         </el-form-item>
         <el-form-item prop="email">
-          <label for="Login">Adres email</label>
+          <label for="Login">Email Adress</label>
           <el-input
             v-model="registerModel.email"
-            placeholder="Adres email"
+            placeholder="Email Adress"
             clearable
             size="large"
           />
         </el-form-item>
         <el-form-item class="text-lg" prop="password">
-          <label>Hasło</label>
+          <label>Password</label>
           <el-input
             v-model="registerModel.password"
             type="password"
-            placeholder="Hasło"
+            placeholder="Password"
             show-password
             size="large"
           />
         </el-form-item>
-        <el-form-item class="text-lg" prop="confirmPassword">
-          <label>Powtórz hasło</label>
+        <el-form-item class="text-lg" prop="passwordConfirm">
+          <label>Confirm Password</label>
           <el-input
             v-model="registerModel.passwordConfirm"
             type="password"
-            placeholder="Powtórz hasło"
+            placeholder="Confirm Password"
             show-password
             size="large"
           />
@@ -184,20 +184,18 @@ const { isLoading, isError, data, error } = useQuery(
         <el-form-item>
           <el-checkbox
             v-model="registerModel.remenberLogin"
-            label="Nie wylogowuj mnie"
+            label="Don't log me out"
             size="large"
           />
         </el-form-item>
         <el-button @click="submitForm(formRef)" class=""
-          >Utwórz konto</el-button
+          >Create Account</el-button
         >
       </el-form>
-
-      <el-form-item>
-        <RouterLink :to="{ name: 'dalej' }">dalej dalej</RouterLink>
-      </el-form-item>
     </div>
   </main>
 </template>
 
 <style scoped></style>
+
+

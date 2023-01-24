@@ -152,8 +152,6 @@ const getRecipe = () => {
       caruselImages.value = allImages;
 
       comments.value = await GetComments();
-
-      userAvatar.value = await GetAvatar(recipe.value.author.id);
       return data;
     })
     .catch((err) => {
@@ -163,6 +161,9 @@ const getRecipe = () => {
         type: "error",
       });
       throw new Error("Fail catch users list");
+    })
+    .finally(async () => {
+      userAvatar.value = await GetAvatar(recipe.value.author.id);
     });
 };
 
@@ -314,141 +315,8 @@ const RecipeQuery = useQuery(
           <div class="px-4">{{ comment.text }}</div>
         </el-card>
       </div>
-      <!-- <div class="basis-1/2 justify-center items-center flex">
-        <div class="w-96 h-32 bg-orange-600 mt-4">
-          <div class="mt-4 ml-4">
-            <el-avatar>A{{}}</el-avatar>
-            <span class="pl-4">Paweł Kowal </span>
-          </div>
-        </div>
-      </div>
-      <div class="basis-1/2 justify-center items-center flex">
-        <div class="w-96 h-32 bg-orange-600 mt-4">
-          <div class="mt-4 ml-4">
-            <el-avatar>A{{}}</el-avatar>
-            <span class="pl-4">Anna Kowalska </span>
-          </div>
-        </div>
-      </div>
-      <div class="basis-1/2 justify-center items-center flex">
-        <div class="w-96 h-32 bg-orange-600 mt-4">
-          <div class="mt-4 ml-4">
-            <el-avatar>A{{}}</el-avatar>
-            <span class="pl-4">Anna Kowalska </span>
-          </div>
-        </div>
-      </div> -->
     </div>
-    <!-- <div
-      class="h-16 flex justify-center items-center border-dotted border-black border-t-[1px] border-b-[1px] mt-2"
-    >
-      <div>Polecamy</div>
-    </div>
-    <div class="flex flex-wrap justify-evenly"> -->
-    <!--todo vfor start -->
-    <!-- <div class="md:basis-1/5 basis-1/2 justify-center items-center flex">
-        <div class="w-52 h-52 bg-slate-400 mt-4 relative">
-          <el-image
-            class="w-full h-full"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-            fit="fill"
-          >
-            <template #error>
-              <div class="h-full flex justify-center items-center">
-                <el-icon><icon-picture /></el-icon>
-              </div>
-            </template>
-          </el-image>
-          <div
-            class="absolute bottom-0 w-full h-16 bg-black bg-opacity-50 overflow-clip"
-          >
-            <span class="text-white"> test test test{{}} </span>
-          </div>
-        </div>
-      </div> -->
-    <!--todo vfor stop -->
-    <!--przyykładowe na teraz  -->
-    <!-- <div class="md:basis-1/5 basis-1/2 justify-center items-center flex">
-        <div class="w-52 h-52 bg-slate-400 mt-4 relative">
-          <el-image
-            class="w-full h-full"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-            fit="fill"
-          >
-            <template #error>
-              <div class="h-full flex justify-center items-center">
-                <el-icon><icon-picture /></el-icon>
-              </div>
-            </template>
-          </el-image>
-          <div
-            class="absolute bottom-0 w-full h-16 bg-black bg-opacity-50 overflow-clip"
-          >
-            <span class="text-white"> test1{{}} </span>
-          </div>
-        </div>
-      </div>
-      <div class="md:basis-1/5 basis-1/2 justify-center items-center flex">
-        <div class="w-52 h-52 bg-slate-400 mt-4 relative">
-          <el-image
-            class="w-full h-full"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-            fit="fill"
-          >
-            <template #error>
-              <div class="h-full flex justify-center items-center">
-                <el-icon><icon-picture /></el-icon>
-              </div>
-            </template>
-          </el-image>
-          <div
-            class="absolute bottom-0 w-full h-16 bg-black bg-opacity-50 overflow-clip"
-          >
-            <span class="text-white"> test2{{}} </span>
-          </div>
-        </div>
-      </div>
-      <div class="md:basis-1/5 basis-1/2 justify-center items-center flex">
-        <div class="w-52 h-52 bg-slate-400 mt-4 relative">
-          <el-image
-            class="w-full h-full"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-            fit="fill"
-          >
-            <template #error>
-              <div class="h-full flex justify-center items-center">
-                <el-icon><icon-picture /></el-icon>
-              </div>
-            </template>
-          </el-image>
-          <div
-            class="absolute bottom-0 w-full h-16 bg-black bg-opacity-50 overflow-clip"
-          >
-            <span class="text-white"> test3{{}} </span>
-          </div>
-        </div>
-      </div>
-      <div class="md:basis-1/5 basis-1/2 justify-center items-center flex">
-        <div class="w-52 h-52 bg-slate-400 mt-4 relative">
-          <el-image
-            class="w-full h-full"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-            fit="fill"
-          >
-            <template #error>
-              <div class="h-full flex justify-center items-center">
-                <el-icon><icon-picture /></el-icon>
-              </div>
-            </template>
-          </el-image>
-          <div
-            class="absolute bottom-0 w-full h-16 bg-black bg-opacity-50 overflow-clip"
-          >
-            <span class="text-white"> test4{{}} </span>
-          </div>
-        </div>
-      </div>
-    </div> -->
+
     <el-drawer
       v-model="isGoogleMapsdrawer"
       :direction="'rtl'"
